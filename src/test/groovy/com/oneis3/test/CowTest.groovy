@@ -27,20 +27,18 @@ class CowTest
     @Test(dataProvider = 'mooData')
     void testMoo(int input, String expectedOutput)
     {
-        assertThat(cow.moo(input), equalTo(expectedOutput))
+        assertThat( cow.moo( input ), equalTo( expectedOutput ) )
     }
 
     @DataProvider(name = 'mooData')
     Object[][] provideMooData()
     {
         return [
-                [
-                        0, '(silence)',
-                        1, 'Mo',
-                        2, 'Moo',
-                        3, 'Mooo',
-                        11, 'Mooooooooooo',
-                ]
+                [0, '(silence)'],
+                [1, 'Mo'],
+                [2, 'Moo'],
+                [3, 'Mooo'],
+                [11, 'Mooooooooooo'],
         ]
     }
 }
