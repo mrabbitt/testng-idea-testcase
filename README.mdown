@@ -35,3 +35,45 @@ Using `ps` command in the Terminal, I see the command running is:
     /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/bin/java -ea -Dlog4j.configuration=log4j.xml -Didea.launcher.port=7532 -Didea.launcher.bin.path=/Applications/IntelliJ IDEA 12.app/bin -Dfile.encoding=UTF-8 -classpath /Applications/IntelliJ IDEA 12.app/plugins/testng/lib/testng-plugin.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/deploy.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/dt.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/javaws.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/jce.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/jconsole.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/management-agent.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/plugin.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/sa-jdi.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/charsets.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsse.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/ui.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/apple_provider.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/dnsns.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/localedata.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/sunjce_provider.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/sunpkcs11.jar:/Users/mike/Documents/coding/testng-idea-testcase/target/test-classes:/Users/mike/Documents/coding/testng-idea-testcase/target/classes:/Users/mike/.m2/repository/org/codehaus/groovy/groovy-all/2.1.8/groovy-all-2.1.8.jar:/Users/mike/.m2/repository/org/testng/testng/6.8.7/testng-6.8.7.jar:/Users/mike/.m2/repository/org/beanshell/bsh/2.0b4/bsh-2.0b4.jar:/Users/mike/.m2/repository/com/beust/jcommander/1.27/jcommander-1.27.jar:/Users/mike/.m2/repository/org/yaml/snakeyaml/1.12/snakeyaml-1.12.jar:/Users/mike/.m2/repository/junit/junit-dep/4.10/junit-dep-4.10.jar:/Users/mike/.m2/repository/org/hamcrest/hamcrest-core/1.2.1/hamcrest-core-1.2.1.jar:/Users/mike/.m2/repository/org/hamcrest/hamcrest-library/1.2.1/hamcrest-library-1.2.1.jar:/Users/mike/.m2/repository/org/slf4j/slf4j-api/1.5.11/slf4j-api-1.5.11.jar:/Users/mike/.m2/repository/org/slf4j/slf4j-log4j12/1.5.11/slf4j-log4j12-1.5.11.jar:/Users/mike/.m2/repository/log4j/log4j/1.2.14/log4j-1.2.14.jar:/Users/mike/.m2/repository/org/slf4j/jcl-over-slf4j/1.5.11/jcl-over-slf4j-1.5.11.jar:/Users/mike/.m2/repository/org/slf4j/jul-to-slf4j/1.5.11/jul-to-slf4j-1.5.11.jar:/Applications/IntelliJ IDEA 12.app/plugins/testng/lib/testng-6.8.jar:/Applications/IntelliJ IDEA 12.app/lib/idea_rt.jar com.intellij.rt.execution.application.AppMain org.testng.RemoteTestNGStarter -port 50253 -usedefaultlisteners false -socket50254 -temp /private/var/folders/d3/qyf39nfj10s8pz734n6zby940000gn/T/idea_testng625278376959773550.tmp
 
 After a few minutes, there is no change, and I end up clicking the Stop button in IntelliJ IDEA.
+
+### `mvn clean test`
+This is expected--one case should fail.
+
+    ...
+    [INFO] --- maven-surefire-plugin:2.15:test (default-test) @ testng-idea-testcase ---
+    [INFO] Surefire report directory: /Users/mike/Documents/coding/testng-idea-testcase/target/surefire-reports
+
+    -------------------------------------------------------
+     T E S T S
+    -------------------------------------------------------
+    Running com.oneis3.test.CowTest
+    Configuring TestNG with: TestNG652Configurator
+    Tests run: 5, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 1.087 sec <<< FAILURE! - in com.oneis3.test.CowTest
+    testMoo(com.oneis3.test.CowTest)  Time elapsed: 0.192 sec  <<< FAILURE!
+    java.lang.AssertionError:
+    Expected: "(silence)"
+         but: was "M"
+    	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+    	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:8)
+    	at org.hamcrest.MatcherAssert$assertThat.callStatic(Unknown Source)
+    	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallStatic(CallSiteArray.java:53)
+    	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callStatic(AbstractCallSite.java:157)
+    	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callStatic(AbstractCallSite.java:169)
+    	at com.oneis3.test.CowTest.testMoo(CowTest.groovy:30)
+
+
+    Results :
+
+    Failed tests:
+      CowTest.testMoo:30
+    Expected: "(silence)"
+         but: was "M"
+
+    Tests run: 5, Failures: 1, Errors: 0, Skipped: 0
+
+## Expected behavior when running from IntelliJ IDEA
+
+* Test should execute.
+* Results of individual tests should be displayed in the left side of the "Run" pane.
+
+:)
