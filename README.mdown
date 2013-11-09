@@ -1,0 +1,37 @@
+## Environment:
+* Mac OS X 10.8.5
+* IntelliJ IDEA 12.1.6
+* Java(TM) SE Runtime Environment (build 1.6.0_65-b14-462-11M4609)
+
+## Steps to replicate
+* Open `pom.xml` with IntelliJ IDEA.
+* Navigate to `src/test/groovy/com/oneis3/test/CowTest.groovy`, right-click and choose `Run 'CowTest'`.
+
+## Observed behavior
+
+### Unmodified `IntelliJ IDEA 12.app`
+
+Tests execute, but individual test results are not displayed.  The left side of the "Run" pane reports "No test results," while the console area reports:
+
+    Total tests run: 5, Failures: 1, Skips: 0
+
+![Screenshot 1](screenshots/screenshot1.png)
+
+### `IntelliJ IDEA 12.app` With TestNG 6.8.7 JAR (First Run)
+
+Using the steps described in [this StackOverFlow answer](http://stackoverflow.com/a/13452828/435166), I replaced the TestNG JAR within the IntelliJ IDEA TestNG plugin with the latest JAR from testng.org.
+
+* Moved `/Applications/IntelliJ IDEA 12.app/plugins/testng/lib/testng.jar` to the trash.
+* Downloaded `http://testng.org/testng-6.8.zip` and unzipped.
+* Copied `testng-6.8.jar` from the unzipped directory to `/Applications/IntelliJ IDEA 12.app/plugins/testng/lib/testng-6.8.jar`.
+* Restart IntelliJ IDEA.
+
+When I attempt to re-run `CowTest`, this time the tests do not execute, but the JVM seems to get stuck:
+
+![Screenshot 2](screenshots/screenshot2.png)
+
+Using `ps` command in the Terminal, I see the command running is:
+
+    /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/bin/java -ea -Dlog4j.configuration=log4j.xml -Didea.launcher.port=7532 -Didea.launcher.bin.path=/Applications/IntelliJ IDEA 12.app/bin -Dfile.encoding=UTF-8 -classpath /Applications/IntelliJ IDEA 12.app/plugins/testng/lib/testng-plugin.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/deploy.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/dt.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/javaws.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/jce.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/jconsole.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/management-agent.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/plugin.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/sa-jdi.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/charsets.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsse.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/ui.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/apple_provider.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/dnsns.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/localedata.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/sunjce_provider.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext/sunpkcs11.jar:/Users/mike/Documents/coding/testng-idea-testcase/target/test-classes:/Users/mike/Documents/coding/testng-idea-testcase/target/classes:/Users/mike/.m2/repository/org/codehaus/groovy/groovy-all/2.1.8/groovy-all-2.1.8.jar:/Users/mike/.m2/repository/org/testng/testng/6.8.7/testng-6.8.7.jar:/Users/mike/.m2/repository/org/beanshell/bsh/2.0b4/bsh-2.0b4.jar:/Users/mike/.m2/repository/com/beust/jcommander/1.27/jcommander-1.27.jar:/Users/mike/.m2/repository/org/yaml/snakeyaml/1.12/snakeyaml-1.12.jar:/Users/mike/.m2/repository/junit/junit-dep/4.10/junit-dep-4.10.jar:/Users/mike/.m2/repository/org/hamcrest/hamcrest-core/1.2.1/hamcrest-core-1.2.1.jar:/Users/mike/.m2/repository/org/hamcrest/hamcrest-library/1.2.1/hamcrest-library-1.2.1.jar:/Users/mike/.m2/repository/org/slf4j/slf4j-api/1.5.11/slf4j-api-1.5.11.jar:/Users/mike/.m2/repository/org/slf4j/slf4j-log4j12/1.5.11/slf4j-log4j12-1.5.11.jar:/Users/mike/.m2/repository/log4j/log4j/1.2.14/log4j-1.2.14.jar:/Users/mike/.m2/repository/org/slf4j/jcl-over-slf4j/1.5.11/jcl-over-slf4j-1.5.11.jar:/Users/mike/.m2/repository/org/slf4j/jul-to-slf4j/1.5.11/jul-to-slf4j-1.5.11.jar:/Applications/IntelliJ IDEA 12.app/plugins/testng/lib/testng-6.8.jar:/Applications/IntelliJ IDEA 12.app/lib/idea_rt.jar com.intellij.rt.execution.application.AppMain org.testng.RemoteTestNGStarter -port 50253 -usedefaultlisteners false -socket50254 -temp /private/var/folders/d3/qyf39nfj10s8pz734n6zby940000gn/T/idea_testng625278376959773550.tmp
+
+After a few minutes, there is no change, and I end up clicking the Stop button in IntelliJ IDEA.
